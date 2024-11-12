@@ -6,6 +6,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import "..//..//commponants/products/product.css"
 import axios from 'axios'
 import { Tooltip } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -21,9 +22,11 @@ const Products = () => {
   const [openAlert, setOpenAler] = useState(false);
   const [Products, setProducts] = useState([]);
 
+ const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(isLoading, "isLoading");
+  // console.log(isLoading, "isLoading");
 
   const cartHandler = (product) => {
     const isExist = Cartlist.find((cart) => cart.id === product.id);
@@ -80,9 +83,9 @@ const Products = () => {
         message="Product Already Added"
 
       />
-      {true ? <Box>
-        (<CircularProgress color='inhert' />)
-      </Box> :
+      {isLoading ? (<Box className='text-center mt-5'>
+        <CircularProgress color='inhert' />
+      </Box>) :
         <Grid container className='container mt-5'>
           {Products?.map((product, index) => {
 
@@ -103,7 +106,9 @@ const Products = () => {
                       <Divider sx={{ borderColor: '#333' }} className='mt-2' />
                       <Box className='d-flex justify-content-between mt-3'>
                         <Tooltip title='product Ditalls'>
-                          <VisibilityIcon />
+                          <VisibilityIcon  onClick={() => {navigate('product-details/$(product-id)')
+                            console.log(Products);
+                          }}/>
                         </Tooltip>
                         <Tooltip title='Add to Favorit'>
                           <FavoriteIcon />
