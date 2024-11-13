@@ -18,8 +18,8 @@ import { useNavigate } from "react-router-dom";
 
 
 const Products = () => {
-  const [Cartlist, setCartList] = useState([]);
-  const [openAlert, setOpenAler] = useState(false);
+  const [CartList, setCartList] = useState([]);
+  const [openAlert, setOpenAlert] = useState(false);
   const [Products, setProducts] = useState([]);
 
  const navigate = useNavigate();
@@ -29,23 +29,23 @@ const Products = () => {
   // console.log(isLoading, "isLoading");
 
   const cartHandler = (product) => {
-    const isExist = Cartlist.find((cart) => cart.id === product.id);
+    const isExist = CartList.find((cart) => cart.id === product.id);
 
 
 
     if (!isExist) {
       setCartList((prev) => [...prev, product]);
     } else {
-      setOpenAler(true)
+      setOpenAlert(true)
     }
   };
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === 'clickAway') {
       return;
     }
 
-    setOpenAler(false);
+    setOpenAlert(false);
   };
 
 
@@ -84,7 +84,7 @@ const Products = () => {
 
       />
       {isLoading ? (<Box className='text-center mt-5'>
-        <CircularProgress color='inhert' />
+        <CircularProgress color='inherit' />
       </Box>) :
         <Grid container className='container mt-5'>
           {Products?.map((product, index) => {
@@ -105,12 +105,11 @@ const Products = () => {
                       </Tooltip>
                       <Divider sx={{ borderColor: '#333' }} className='mt-2' />
                       <Box className='d-flex justify-content-between mt-3'>
-                        <Tooltip title='product Ditalls'>
-                          <VisibilityIcon  onClick={() => {navigate('product-details/$(product-id)')
-                            console.log(Products);
+                        <Tooltip title='product Details'>
+                          <VisibilityIcon  onClick={() => {navigate(`product-details/${product?.id}`)
                           }}/>
                         </Tooltip>
-                        <Tooltip title='Add to Favorit'>
+                        <Tooltip title='Add to Favorite'>
                           <FavoriteIcon />
                         </Tooltip>
                         <Tooltip title='Add to Cart'>
