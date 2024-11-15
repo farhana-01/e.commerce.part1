@@ -1,5 +1,5 @@
-import { Box, Card, CircularProgress, Divider, Grid, Grid2, IconButton, Snackbar, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import { Autocomplete, Box, Card, CircularProgress, Divider, Grid, Grid2, IconButton, Snackbar, TextField, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -7,6 +7,9 @@ import "..//..//commponants/products/product.css"
 import axios from 'axios'
 import { Tooltip } from '@mui/material';
 import { useNavigate } from "react-router-dom";
+import SearchIcon from '@mui/icons-material/Search';
+import SearchIconWrapper from '@mui/icons-material/Search';
+
 
 
 
@@ -20,13 +23,12 @@ import { useNavigate } from "react-router-dom";
 const Products = () => {
   const [CartList, setCartList] = useState([]);
   const [openAlert, setOpenAlert] = useState(false);
+  const [allProdducts , setAllProducts] = useState([]);
   const [Products, setProducts] = useState([]);
-
- const navigate = useNavigate();
-
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-
-  // console.log(isLoading, "isLoading");
+  const  [categoryOptions , setCategoryOptions] = useState([]);
+  const [cateGoryFillter , setcateGoryFillter] = useState({});
 
   const cartHandler = (product) => {
     const isExist = CartList.find((cart) => cart.id === product.id);
@@ -60,6 +62,20 @@ const Products = () => {
         if (products.status === 200) {
           setIsLoading(false);
           setProducts(products?.data);
+          setAllProducts(products?.data);
+          const filterCategories = products?.data.map((Product) => {
+            return {
+              label: Product?.category?.toUpperCase(),
+              value: Product?.category,
+            };
+          });
+          console.log(filterCategories);
+
+          const uniqueCategories = filterCategories.filter(
+            (item, index, self) => index === self.findIndex((t) => t.value === item.value)
+          );
+
+          setCategoryOptions (uniqueCategories);
         } else {
           setIsLoading(true);
         }
@@ -72,10 +88,27 @@ const Products = () => {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    let filteredProducts = allProdducts?.filter(
+      (Product) => Product?.category === cateGoryFillter?.value
+    );
+    setProducts(filteredProducts);
+  }, [cateGoryFillter]);
+  
 
   return (
 
     <>
+      <Box className='mt-5 d-flex justify-content-end container'>
+        <Autocomplete
+          size='small'
+          disablePortal
+          options={categoryOptions}
+          sx={{ width: 240 }}
+          onChange={(e,newValue)=>{setcateGoryFillter(newValue);}}
+          renderInput={(params) => <TextField {...params} label="Categories" />}
+        />
+      </Box>
       <Snackbar
         open={openAlert}
         autoHideDuration={6000}
@@ -106,8 +139,9 @@ const Products = () => {
                       <Divider sx={{ borderColor: '#333' }} className='mt-2' />
                       <Box className='d-flex justify-content-between mt-3'>
                         <Tooltip title='product Details'>
-                          <VisibilityIcon  onClick={() => {navigate(`product-details/${product?.id}`)
-                          }}/>
+                          <VisibilityIcon onClick={() => {
+                            navigate(`product-details/${product?.id}`)
+                          }} />
                         </Tooltip>
                         <Tooltip title='Add to Favorite'>
                           <FavoriteIcon />

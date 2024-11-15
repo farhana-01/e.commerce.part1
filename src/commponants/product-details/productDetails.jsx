@@ -2,6 +2,7 @@ import { Box, CircularProgress, Grid, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import '..//product-details//ProductDetail.css';
 
 const ProductDetails = () => {
    
@@ -37,17 +38,26 @@ const ProductDetails = () => {
     <>
    {isLoading ? (<Box className='text-center mt-5'>
         <CircularProgress color='inherit' />
-      </Box>) : <Grid container spacing={3} className='container mt-5 pt-5'>
-    <Grid item md={6} className='text-center'>
+      </Box>) : <Grid container spacing={3} className='container mt-5 pt-5 product-detail-container '>
+    <Grid item md={6}  xs={12} className="product-info text-center">
     
-      <img width={"300px"} src={ProductDetail?.image} alt="" />
+      <img className='product-image' width={"300px"} src={ProductDetail?.image} alt="" />
       </Grid>
-    <Grid item md={6} className='mt-5 pt-5'>
-      <Typography variant='body1'>{ProductDetail?.category}</Typography>
-      <Typography variant='h5'>{ProductDetail?.title}</Typography>
-      <Typography variant='body6'>{ProductDetail?.description}</Typography>
+    <Grid item md={6} className='mt-5 pt-5 '>
+    <Typography variant="body2" color="textSecondary" className="category">
+          {ProductDetail?.category}
+        </Typography>
+    <Typography variant="h4" className="product-title">
+          {ProductDetail?.title}
+        </Typography>
+        <Typography variant="body1" className="product-description">
+          {ProductDetail?.description}
+        </Typography>
     </Grid>
     </Grid>}
+
+    
+    
     
     </>
   );
