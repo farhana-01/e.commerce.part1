@@ -1,8 +1,11 @@
-import { Box, CircularProgress, Grid, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import '..//product-details//ProductDetail.css';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ShareIcon from '@mui/icons-material/Share';
 
 const ProductDetails = () => {
    
@@ -52,6 +55,17 @@ const ProductDetails = () => {
         </Typography>
         <Typography variant="body1" className="product-description">
           {ProductDetail?.description}
+          <Box className='d-flex gap-5 mt-5'>
+            <Button variant='outlined'>
+              <FavoriteBorderIcon />
+            </Button>
+            <Button variant='outlined'>
+              <AddShoppingCartIcon />
+            </Button>
+            <Button variant='outlined'>
+              <ShareIcon />
+            </Button>
+          </Box>
         </Typography>
     </Grid>
     </Grid>}

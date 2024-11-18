@@ -7,8 +7,8 @@ import "..//..//commponants/products/product.css"
 import axios from 'axios'
 import { Tooltip } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import SearchIcon from '@mui/icons-material/Search';
-import SearchIconWrapper from '@mui/icons-material/Search';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../slices/add-cart/addCartSlices';
 
 
 
@@ -26,6 +26,7 @@ const Products = () => {
   const [allProdducts , setAllProducts] = useState([]);
   const [Products, setProducts] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const  [categoryOptions , setCategoryOptions] = useState([]);
   const [cateGoryFillter , setcateGoryFillter] = useState({});
@@ -147,7 +148,7 @@ const Products = () => {
                           <FavoriteIcon />
                         </Tooltip>
                         <Tooltip title='Add to Cart'>
-                          <AddShoppingCartIcon onClick={() => { cartHandler(product) }} />
+                          <AddShoppingCartIcon onClick={()=>dispatch(addToCart())} />
                         </Tooltip>
 
                       </Box>
