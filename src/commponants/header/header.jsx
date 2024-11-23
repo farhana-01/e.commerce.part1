@@ -16,7 +16,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import AddToCart from '../add-cart/addcart';
+import CartList from '../cart-list/cartList';
 import { useSelector } from 'react-redux';
 
 const Search = styled('div')(({ theme }) => ({
@@ -64,7 +64,7 @@ export default function Header() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [cartItems, setCartItems] = React.useState([]);
   const count = useSelector((state) => state.counter);
-  console.log(count, 'count');
+ 
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -232,7 +232,7 @@ export default function Header() {
       {renderMobileMenu}
       {renderMenu}
 
-      <AddToCart open={open} toggleDrawer={toggleDrawer} />
+      <CartList open={open} toggleDrawer={toggleDrawer} />
     </Box>
   );
 }

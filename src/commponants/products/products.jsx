@@ -7,8 +7,10 @@ import "..//..//commponants/products/product.css"
 import axios from 'axios'
 import { Tooltip } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../slices/add-cart/addCartSlices';
+import { addproduct } from '../../slices/products/productsSlices';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -30,11 +32,13 @@ const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
   const  [categoryOptions , setCategoryOptions] = useState([]);
   const [cateGoryFillter , setcateGoryFillter] = useState({});
+  const {toast} = useSelector((state) => state.products);
+
+ 
+
 
   const cartHandler = (product) => {
     const isExist = CartList.find((cart) => cart.id === product.id);
-
-
 
     if (!isExist) {
       setCartList((prev) => [...prev, product]);
@@ -42,7 +46,7 @@ const Products = () => {
       setOpenAlert(true)
     }
   };
-
+  console.log(toast, 'toast');
   const handleClose = (event, reason) => {
     if (reason === 'clickAway') {
       return;
@@ -70,7 +74,7 @@ const Products = () => {
               value: Product?.category,
             };
           });
-          console.log(filterCategories);
+          
 
           const uniqueCategories = filterCategories.filter(
             (item, index, self) => index === self.findIndex((t) => t.value === item.value)
@@ -96,10 +100,17 @@ const Products = () => {
     setProducts(filteredProducts);
   }, [cateGoryFillter]);
   
+   
+useState(() => {
+  if(toast){
+    toast('Product Already Added!');
+  }
+} , [toast])
 
   return (
 
     <>
+    <ToastContainer />
       <Box className='mt-5 d-flex justify-content-end container'>
         <Autocomplete
           size='small'
@@ -122,7 +133,7 @@ const Products = () => {
       </Box>) :
         <Grid container className='container mt-5'>
           {Products?.map((product, index) => {
-
+            
             return (
               <Grid
                 item xs={12} md={3} mb={3}
@@ -148,7 +159,7 @@ const Products = () => {
                           <FavoriteIcon />
                         </Tooltip>
                         <Tooltip title='Add to Cart'>
-                          <AddShoppingCartIcon onClick={()=>dispatch(addToCart())} />
+                          <AddShoppingCartIcon onClick={()=>dispatch(addproduct(product))} />
                         </Tooltip>
 
                       </Box>

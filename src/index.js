@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProductDetails from './commponants/product-details/productDetails';
 import Leyout from './commponants/leyout/Leyout';
 import { Provider } from "react-redux";
+import 'react-toastify/dist/ReactToastify.css';
 import { store } from './store';
 
 const router =createBrowserRouter([
