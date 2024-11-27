@@ -32,7 +32,7 @@ const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
   const  [categoryOptions , setCategoryOptions] = useState([]);
   const [cateGoryFillter , setcateGoryFillter] = useState({});
-  const {toast} = useSelector((state) => state.products);
+  const {isToast} = useSelector((state) => state.products);
 
  
 
@@ -46,7 +46,7 @@ const Products = () => {
       setOpenAlert(true)
     }
   };
-  console.log(toast, 'toast');
+  console.log(isToast, 'isToast');
   const handleClose = (event, reason) => {
     if (reason === 'clickAway') {
       return;
@@ -102,10 +102,10 @@ const Products = () => {
   
    
 useState(() => {
-  if(toast){
+  if(isToast){
     toast('Product Already Added!');
   }
-} , [toast])
+} , [isToast])
 
   return (
 
